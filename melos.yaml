@@ -1,0 +1,31 @@
+name: gruas
+
+packages:
+  - packages/**
+  - gruas_user
+  - gruas_worker
+  - gruas_admin_desktop
+  - gruas_landing_user
+  - gruas_landing_worker
+  - gruas_landing_admin
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  analyze:
+    run: melos exec -- "flutter analyze"
+    description: Ejecuta el análisis de código en todos los paquetes
+
+  test:
+    run: melos exec -- "flutter test"
+    description: Ejecuta las pruebas en todos los paquetes
+
+  format:
+    run: melos exec -- "dart format ."
+    description: Formatea el código en todos los paquetes
+
+  clean:
+    run: melos exec -- "flutter clean"
+    description: Limpia los archivos generados en todos los paquetes 
