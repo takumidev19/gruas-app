@@ -107,6 +107,6 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## Contacto
 
-Tu Nombre - [@tutwitter](https://twitter.com/tutwitter) - email@example.com
+Joaquin Tapia - j.tapia.fuentes18@gmail.com
 
 Link del Proyecto: [https://github.com/tu-usuario/gruas](https://github.com/tu-usuario/gruas)
