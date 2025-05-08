@@ -9,14 +9,20 @@ Este proyecto es un sistema completo para la gestión de servicios de grúas, de
 - Aplicación móvil para usuarios finales
 - Aplicación móvil para trabajadores
 - Interfaz web para diferentes propósitos
+- Integración con Google Maps para seguimiento en tiempo real
+- Sistema de notificaciones push
+- Gestión de ubicaciones y rutas
+- Sistema de calificaciones y reseñas
+- Historial de servicios y reportes
 
 ## Requisitos
 
-- Flutter SDK (última versión estable)
-- Dart SDK (última versión estable)
+- Flutter SDK (versión >=3.3.0)
+- Dart SDK (versión >=3.3.0)
 - Firebase CLI
 - Android Studio / Visual Studio Code
 - Git
+- Cuenta de Google Cloud Platform (para Google Maps)
 
 ## Configuración
 
@@ -34,10 +40,16 @@ flutter pub get
 3. Configura Firebase:
    - Crea un proyecto en Firebase Console
    - Habilita Authentication y Firestore
+   - Configura las reglas de seguridad en Firestore
    - Descarga y configura los archivos de configuración de Firebase
    - Actualiza las credenciales en `lib/firebase_options.dart`
 
-4. Ejecuta la aplicación:
+4. Configura Google Maps:
+   - Obtén una API key de Google Maps
+   - Configura las restricciones de la API key
+   - Actualiza la API key en la configuración del proyecto
+
+5. Ejecuta la aplicación:
 ```bash
 flutter run
 ```
@@ -62,8 +74,24 @@ gruas/
 │   ├── images/
 │   ├── icons/
 │   └── fonts/
-└── test/
+├── test/
+└── web/
 ```
+
+## Tecnologías Utilizadas
+
+- Flutter (SDK >=3.3.0)
+- Firebase
+  - Authentication
+  - Firestore
+  - Cloud Storage
+- Provider y Flutter Bloc (Gestión de estado)
+- Go Router (Navegación)
+- Material Design 3
+- Google Maps Flutter
+- Flutter Local Notifications
+- Geolocator
+- Google Fonts
 
 ## Roles de Usuario
 
@@ -72,26 +100,24 @@ gruas/
 - Gestión de usuarios y trabajadores
 - Gestión de grúas y servicios
 - Generación de reportes
+- Configuración del sistema
+- Monitoreo de servicios en tiempo real
 
 ### Usuario
 - Solicitud de servicios
-- Seguimiento de servicios activos
+- Seguimiento de servicios activos en tiempo real
 - Historial de servicios
 - Calificación de servicios
+- Gestión de perfil y preferencias
+- Notificaciones push
 
 ### Trabajador
 - Gestión de disponibilidad
 - Visualización de servicios asignados
 - Actualización de estado de servicios
 - Registro de horas trabajadas
-
-## Tecnologías Utilizadas
-
-- Flutter
-- Firebase (Authentication, Firestore)
-- Provider (Gestión de estado)
-- Go Router (Navegación)
-- Material Design 3
+- Navegación integrada con Google Maps
+- Notificaciones de nuevos servicios
 
 ## Contribución
 
