@@ -1,134 +1,127 @@
 # Sistema Multiplataforma de Gestión de Grúas
 
-Sistema completo para la gestión de servicios de grúas, desarrollado con Flutter y Firebase.
+Sistema completo para la gestión de servicios de grúas, desarrollado con Flutter y Firebase, organizado como un **monorepo** usando [Melos](https://melos.invertase.dev/).
 
-## Estructura del Proyecto
+---
+
+## Estructura del Monorepo
 
 ```
-gruas/
-├── apps/                      # Aplicaciones Flutter
-│   ├── user/                  # App móvil para usuarios
-│   ├── worker/                # App móvil para conductores
-│   └── admin/                 # App de escritorio para administradores
-│
-├── web/                       # Landing pages
-│   ├── user/                  # Landing page para usuarios
-│   ├── worker/                # Landing page para conductores
-│   └── admin/                 # Landing page para administradores
-│
-├── shared/                    # Código compartido
-├── docs/                      # Documentación
-└── .github/                   # Configuración de GitHub
+Gruas/
+├── gruas_admin_desktop/      # App de escritorio para administradores
+├── gruas_worker/             # App móvil para conductores
+├── gruas_user/               # App móvil para usuarios
+├── gruas_landing_user/       # Landing page para usuarios
+├── gruas_landing_worker/     # Landing page para conductores
+├── gruas_landing_admin/      # Landing page para administración
+├── packages/                 # Paquetes compartidos (core, ui, etc.)
+│   ├── core/                 # Lógica de negocio y servicios compartidos
+│   └── ui/                   # Componentes visuales reutilizables
+├── melos.yaml                # Configuración de Melos
+├── pubspec.yaml              # Solo para Melos (no es una app)
+└── README.md                 # Documentación principal
 ```
 
-## Aplicaciones
+---
 
-### App de Usuario (`apps/user/`)
-Aplicación móvil para clientes que necesitan servicios de grúa.
-- Solicitud de servicios
-- Seguimiento en tiempo real
-- Historial y calificaciones
-- Sistema de pagos
+## Uso de Melos
 
-### App de Trabajador (`apps/worker/`)
-Aplicación móvil para conductores de grúas.
-- Gestión de disponibilidad
-- Navegación y mapas
-- Gestión de servicios
-- Reportes y horas trabajadas
+Este monorepo utiliza [Melos](https://melos.invertase.dev/) para gestionar múltiples paquetes y apps Flutter.
 
-### Panel de Administración (`apps/admin/`)
-Aplicación de escritorio para gestión central.
-- Gestión de usuarios y trabajadores
-- Monitoreo de flota
-- Reportes y estadísticas
-- Configuración del sistema
+### Comandos útiles:
 
-## Landing Pages
+- Instalar dependencias y vincular paquetes:
+  ```bash
+  melos bootstrap
+  ```
+- Analizar el código de todos los paquetes:
+  ```bash
+  melos analyze
+  ```
+- Ejecutar pruebas en todos los paquetes:
+  ```bash
+  melos test
+  ```
+- Formatear el código:
+  ```bash
+  melos format
+  ```
+- Limpiar builds:
+  ```bash
+  melos clean
+  ```
 
-### Usuario (`web/user/`)
-Sitio web para promocionar la app de usuario.
-- Información de servicios
-- Beneficios
-- Descarga de la app
+> **Nota:** Ejecuta estos comandos desde la raíz del monorepo.
 
-### Trabajador (`web/worker/`)
-Sitio web para reclutamiento de conductores.
-- Beneficios para conductores
-- Requisitos
-- Proceso de registro
+---
 
-### Administración (`web/admin/`)
-Sitio web para el panel de administración.
-- Características del panel
-- Beneficios
-- Solicitud de demo
+## Configuración Inicial para Desarrolladores
 
-## Requisitos
+1. **Clona el repositorio:**
+   ```bash
+   git clone https://github.com/tu-usuario/gruas.git
+   cd gruas
+   ```
+2. **Instala Melos globalmente:**
+   ```bash
+   dart pub global activate melos
+   ```
+3. **Instala dependencias y vincula paquetes:**
+   ```bash
+   melos bootstrap
+   ```
+4. **Configura Firebase en cada app:**
+   - Ejecuta `flutterfire configure` en cada app (ejemplo: `gruas_admin_desktop`)
+   - Copia el archivo `firebase_options.dart` generado a la carpeta `lib/` de cada app
+   - Asegúrate de inicializar Firebase en el `main.dart` de cada app
+5. **Configura Google Maps (si aplica):**
+   - Obtén una API key y configúrala en cada app móvil
 
-- Flutter SDK (versión >=3.3.0)
-- Dart SDK (versión >=3.3.0)
-- Firebase CLI
-- Android Studio / Visual Studio Code
-- Git
-- Cuenta de Google Cloud Platform
+---
 
-## Configuración
+## Buenas Prácticas y Convenciones
 
-1. Clona el repositorio:
-```bash
-git clone https://github.com/tu-usuario/gruas.git
-cd gruas
-```
+- **Estructura de ramas:**
+  - `main`: Producción
+  - `develop`: Desarrollo principal
+  - `feature/*`, `bugfix/*`, `release/*`: Flujos de trabajo recomendados
+- **Código:**
+  - Sigue las guías de estilo de Dart/Flutter
+  - Documenta funciones, clases y servicios importantes
+  - Escribe pruebas unitarias y de integración
+  - Usa widgets y servicios compartidos desde `packages/`
+- **Commits:**
+  - Usa mensajes claros y descriptivos
+  - Ejemplo: `feat(worker): agregar pantalla de historial de servicios`
 
-2. Instala las dependencias de cada aplicación:
-```bash
-cd apps/user && flutter pub get
-cd ../worker && flutter pub get
-cd ../admin && flutter pub get
-```
+---
 
-3. Configura Firebase:
-   - Crea un proyecto en Firebase Console
-   - Habilita Authentication y Firestore
-   - Configura las reglas de seguridad
-   - Descarga y configura los archivos de Firebase
-   - Actualiza las credenciales en cada app
+## Cómo agregar un nuevo paquete/app
 
-4. Configura Google Maps:
-   - Obtén una API key de Google Maps
-   - Configura las restricciones
-   - Actualiza la API key en la configuración
+1. Crea el nuevo paquete/app dentro de la carpeta correspondiente (`packages/` o raíz para apps).
+2. Agrega la ruta en `melos.yaml` si es necesario.
+3. Ejecuta `melos bootstrap` para vincular dependencias.
+4. Sigue las buenas prácticas de estructura y documentación.
 
-## Desarrollo
-
-### Estructura de Ramas
-- `main`: Código en producción
-- `develop`: Rama de desarrollo principal
-- `feature/*`: Nuevas características
-- `bugfix/*`: Correcciones de errores
-- `release/*`: Preparación de releases
-
-### Convenciones de Código
-- Seguir las guías de estilo de Dart/Flutter
-- Documentar el código con comentarios
-- Escribir pruebas unitarias
-- Mantener el código limpio y mantenible
+---
 
 ## Contribución
 
-1. Fork el repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
+1. Haz un fork del repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/mi-feature`)
+3. Realiza tus cambios y commitea (`git commit -m 'feat: mi feature'`)
+4. Haz push a tu rama (`git push origin feature/mi-feature`)
 5. Abre un Pull Request
+
+---
+
+## Contacto y Soporte
+
+- **Responsable:** Joaquin Tapia - j.tapia.fuentes18@gmail.com
+- **Repositorio:** [https://github.com/tu-usuario/gruas](https://github.com/tu-usuario/gruas)
+
+---
 
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
-
-## Contacto
-
-Joaquin Tapia - j.tapia.fuentes18@gmail.com
-
-Link del Proyecto: [https://github.com/tu-usuario/gruas](https://github.com/tu-usuario/gruas)
