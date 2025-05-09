@@ -4,6 +4,14 @@ Sistema completo para la gestión de servicios de grúas, desarrollado con Flutt
 
 ---
 
+## Documentación de cada aplicación
+
+- [Panel de Administración (gruas_admin_desktop)](./gruas_admin_desktop/README.md)
+- [App para conductores (gruas_worker)](./gruas_worker/README.md)
+- [App para usuarios (gruas_user)](./gruas_user/README.md)
+
+---
+
 ## Estructura del Monorepo
 
 ```
