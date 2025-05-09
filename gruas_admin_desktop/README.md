@@ -2,9 +2,12 @@
 
 Aplicación de escritorio para la gestión central de servicios de grúas.
 
-## Características
+## Características principales
 
 - Gestión completa de usuarios y trabajadores
+- Edición avanzada de usuarios: puedes modificar nombre, email y rol (admin, user, worker)
+- Visualización detallada de cada usuario: email, nombre, rol, creado por (nombre), fecha de creación
+- Verificación de seguridad para editar usuarios mediante API REST de Firebase Auth (exclusivo para escritorio)
 - Monitoreo en tiempo real de la flota
 - Gestión de servicios y emergencias
 - Reportes y estadísticas
@@ -31,6 +34,7 @@ flutter pub get
    - Habilita Authentication y Firestore
    - Descarga y configura los archivos de configuración de Firebase
    - Actualiza las credenciales en `lib/firebase_options.dart`
+   - Copia tu API Key de Firebase y colócala en `lib/services/users_service.dart` en la constante `firebaseApiKey`
 
 3. Ejecuta la aplicación:
 ```bash
@@ -43,30 +47,29 @@ flutter run -d windows
 gruas_admin_desktop/
 ├── lib/
 │   ├── core/
-│   │   ├── routes/
-│   │   └── theme/
-│   ├── features/
-│   │   ├── auth/
-│   │   ├── dashboard/
-│   │   ├── users/
-│   │   ├── workers/
-│   │   ├── services/
-│   │   └── reports/
-│   ├── models/
+│   ├── screens/
 │   ├── services/
-│   └── utils/
+│   ├── widgets/
+│   └── firebase_options.dart
 ├── assets/
-│   ├── images/
-│   ├── icons/
-│   └── fonts/
-└── test/
+├── test/
+└── ...
 ```
 
 ## Tecnologías Utilizadas
 
 - Flutter
 - Firebase (Authentication, Firestore)
-- Provider (Gestión de estado)
+- http (para API REST de verificación de contraseña)
 - Go Router (Navegación)
 - Material Design 3
 - Windows Desktop Support
+
+## Notas de seguridad
+
+- La verificación de contraseña para editar usuarios se realiza mediante la API REST de Firebase Auth, ya que la reautenticación nativa no está soportada en Windows Desktop.
+- El campo "creado por" muestra el nombre del usuario creador, consultando Firestore automáticamente.
+
+## Contribuciones
+
+Si deseas contribuir, por favor abre un issue o un pull request.
