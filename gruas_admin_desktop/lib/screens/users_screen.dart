@@ -15,7 +15,7 @@ class UsersScreen extends StatefulWidget {
 
 class _UsersScreenState extends State<UsersScreen> {
   final UsersService _usersService = UsersService();
-  Map<String, String> _userNamesCache = {};
+  final Map<String, String> _userNamesCache = {};
 
   Future<String> _getUserNameById(String userId) async {
     if (_userNamesCache.containsKey(userId)) {
@@ -33,28 +33,36 @@ class _UsersScreenState extends State<UsersScreen> {
   }
 
   Future<void> _showEditDialog(BuildContext context, String userId, Map<String, dynamic> userData) async {
+    if (!mounted) return;
+    
+    final BuildContext dialogContext = context;
+    
     // Primero mostrar el diálogo de verificación de contraseña
-    await showDialog(
-      context: context,
+    final verified = await showDialog<bool>(
+      context: dialogContext,
       builder: (context) => PasswordVerificationDialog(
-        onVerified: () async {
-          // Si la verificación es exitosa, mostrar el diálogo de edición
-          final result = await showDialog<bool>(
-            context: context,
-            builder: (context) => EditUserDialog(
-              userId: userId,
-              userData: userData,
-            ),
-          );
-
-          if (result == true && mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Usuario actualizado correctamente')),
-            );
-          }
-        },
+        onVerified: () => Navigator.of(context).pop(true),
       ),
     );
+
+    if (!mounted) return;
+    if (verified != true) return;
+
+    // Si la verificación es exitosa, mostrar el diálogo de edición
+    final result = await showDialog<bool>(
+      context: dialogContext,
+      builder: (context) => EditUserDialog(
+        userId: userId,
+        userData: userData,
+      ),
+    );
+
+    if (!mounted) return;
+    if (result == true) {
+      ScaffoldMessenger.of(dialogContext).showSnackBar(
+        const SnackBar(content: Text('Usuario actualizado correctamente')),
+      );
+    }
   }
 
   @override

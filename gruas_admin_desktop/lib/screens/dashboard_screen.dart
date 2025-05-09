@@ -118,8 +118,8 @@ class WindowButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonColors = WindowButtonColors(
       iconNormal: Theme.of(context).colorScheme.onSurface,
-      mouseOver: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-      mouseDown: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+      mouseOver: Theme.of(context).colorScheme.primary.withValues(alpha: 26),
+      mouseDown: Theme.of(context).colorScheme.primary.withValues(alpha: 51),
       iconMouseOver: Theme.of(context).colorScheme.primary,
       iconMouseDown: Theme.of(context).colorScheme.primary,
     );
