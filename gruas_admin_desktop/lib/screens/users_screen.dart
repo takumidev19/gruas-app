@@ -41,7 +41,9 @@ class _UsersScreenState extends State<UsersScreen> {
     final verified = await showDialog<bool>(
       context: dialogContext,
       builder: (context) => PasswordVerificationDialog(
-        onVerified: () => Navigator.of(context).pop(true),
+        onVerified: () {
+          Future.microtask(() => Navigator.of(context).pop(true));
+        },
       ),
     );
 
@@ -50,6 +52,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
     // Si la verificación es exitosa, mostrar el diálogo de edición
     final result = await showDialog<bool>(
+      // ignore: use_build_context_synchronously
       context: dialogContext,
       builder: (context) => EditUserDialog(
         userId: userId,
@@ -59,6 +62,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
     if (!mounted) return;
     if (result == true) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(dialogContext).showSnackBar(
         const SnackBar(content: Text('Usuario actualizado correctamente')),
       );

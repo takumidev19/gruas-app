@@ -26,10 +26,8 @@ class _PasswordVerificationDialogState extends State<PasswordVerificationDialog>
   }
 
   Future<void> _verifyPassword() async {
-    print('Iniciando verificación...');
     if (_passwordController.text.isEmpty) {
       setState(() => _errorMessage = 'Por favor ingrese su contraseña');
-      print('Contraseña vacía');
       return;
     }
 
@@ -39,27 +37,22 @@ class _PasswordVerificationDialogState extends State<PasswordVerificationDialog>
     });
 
     try {
-      print('Llamando a verificación de contraseña por API REST...');
       final user = _usersService.currentUser;
       if (user == null) throw Exception('No hay usuario autenticado');
       final isValid = await _usersService.verifyPasswordWithApi(user.email!, _passwordController.text);
-      print('Resultado de verificación: $isValid');
       if (isValid) {
         if (mounted) {
-          Navigator.of(context).pop();
           widget.onVerified();
         }
       } else {
         setState(() => _errorMessage = 'Contraseña incorrecta');
       }
     } catch (e) {
-      print('Excepción capturada en el diálogo: $e');
       setState(() => _errorMessage = 'Error: $e');
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
       }
-      print('Finalizó _verifyPassword');
     }
   }
 
