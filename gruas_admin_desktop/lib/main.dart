@@ -4,6 +4,7 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
 import 'screens/login_screen.dart';
 import 'screens/dashboard_screen.dart';
@@ -11,6 +12,7 @@ import 'screens/users_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

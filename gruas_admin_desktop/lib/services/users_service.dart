@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const String firebaseApiKey = 'AIzaSyAQqrXqYKz9eYelnzIEXWhqBfUORyqkUug';
+final String firebaseApiKey = dotenv.env['FIREBASE_API_KEY'] ?? '';
 
 class UsersService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
